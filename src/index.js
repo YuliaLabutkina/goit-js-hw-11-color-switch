@@ -15,7 +15,6 @@ const colors = [
   const buttonStartRef = document.querySelector('button[data-action="start"]');
   const buttonStopRef = document.querySelector('button[data-action="stop"]');
   let color = null;
-  let isActive = false;
 
 
   const randomIntegerFromInterval = (min, max) => {
@@ -23,17 +22,15 @@ const colors = [
   };
 
   const startChooseBackground = () => {
-    if(isActive) return;
-    isActive = true;
-
+    buttonStartRef.setAttribute('disabled', 'disabled');
     color = setInterval(() => {
         bodyRef.setAttribute('style', `background-color: ${colors[randomIntegerFromInterval(0, colors.length - 1)]};`)
     }, 1000);
   };
 
   const stopChooseBackground = () => {
-    isActive = false;
     clearInterval(color);
+    buttonStartRef.removeAttribute('disabled');
   };
 
 
