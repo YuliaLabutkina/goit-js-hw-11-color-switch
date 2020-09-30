@@ -1,35 +1,60 @@
 import './styles.css';
+import colors from './js/array-colors';
+import refs from './js/refs';
 
 
-const colors = ['#FFFFFF', '#2196F3', '#4CAF50', '#FF9800', '#009688', '#795548', '#CD5C5C', '#B22222', '#FFC0CB', '#FF1493', '#228B22', '#DB7093', '#FF6347'];
+  class ChangeBodyColor {
+    constructor() {
+      this.color = null;
+    }
+
+    randomIntegerFromInterval = (min, max) => {
+      return Math.floor(Math.random() * (max - min + 1) + min);
+    };
 
 
-  const bodyRef = document.querySelector('body');
-  const buttonStartRef = document.querySelector('button[data-action="start"]');
-  const buttonStopRef = document.querySelector('button[data-action="stop"]');
-  let color = null;
-  buttonStopRef.setAttribute('disabled', 'disabled');
+    startChooseBackground = () => {
+      refs.buttonStopRef.removeAttribute('disabled', '');
+      refs.buttonStartRef.setAttribute('disabled', '');
+      this.color = setInterval(() => {
+        refs.bodyRef.setAttribute('style', `background-color: ${colors[this.randomIntegerFromInterval(0, colors.length - 1)]};`)
+      }, 1000);
+    };
+
+    stopChooseBackground = () => {
+      clearInterval(this.color);
+      refs.buttonStartRef.removeAttribute('disabled');
+      refs.buttonStopRef.setAttribute('disabled', '');
+    };
+
+  }
+
+  const changeColor = new ChangeBodyColor();
+
+  refs.buttonStartRef.addEventListener('click', changeColor.startChooseBackground);
+  refs.buttonStopRef.addEventListener('click', changeColor.stopChooseBackground);
 
 
+  // let color = null;
 
-  const randomIntegerFromInterval = (min, max) => {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-  };
+  // const randomIntegerFromInterval = (min, max) => {
+  //   return Math.floor(Math.random() * (max - min + 1) + min);
+  // };
 
-  const startChooseBackground = () => {
-    buttonStopRef.removeAttribute('disabled', 'disabled');
-    buttonStartRef.setAttribute('disabled', 'disabled');
-    color = setInterval(() => {
-        bodyRef.setAttribute('style', `background-color: ${colors[randomIntegerFromInterval(0, colors.length - 1)]};`)
-    }, 1000);
-  };
+  // const startChooseBackground = () => {
+  //   refs.buttonStopRef.removeAttribute('disabled');
+  //   refs.buttonStartRef.setAttribute('disabled', '');
+  //   color = setInterval(() => {
+  //     refs.bodyRef.setAttribute('style', `background-color: ${colors[randomIntegerFromInterval(0, colors.length - 1)]};`)
+  //   }, 1000);
+  // };
 
-  const stopChooseBackground = () => {
-    clearInterval(color);
-    buttonStartRef.removeAttribute('disabled');
-    buttonStopRef.setAttribute('disabled', 'disabled');
-  };
+  // const stopChooseBackground = () => {
+  //   clearInterval(color);
+  //   refs.buttonStartRef.removeAttribute('disabled');
+  //   refs.buttonStopRef.setAttribute('disabled', '');
+  // };
 
 
-  buttonStartRef.addEventListener('click', startChooseBackground);
-  buttonStopRef.addEventListener('click', stopChooseBackground);
+  // refs.buttonStartRef.addEventListener('click', startChooseBackground);
+  // refs.buttonStopRef.addEventListener('click', stopChooseBackground);
